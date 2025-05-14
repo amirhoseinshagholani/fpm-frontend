@@ -1,0 +1,53 @@
+@font-face {
+    font-family: 'Vazir';
+    src: url('/fonts/Vazir.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'VazirLight';
+    src: url('/fonts/Vazir-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'VazirMedium';
+    src: url('/fonts/Vazir-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'VazirBold';
+    src: url('/fonts/Vazir-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'VazirThin';
+    src: url('/fonts/Vazir-Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
+  }
+    
+  @layer utilities {
+    .font-vazir-light {
+      font-family: 'VazirLight', sans-serif;
+    }
+    .font-vazir-bold {
+      font-family: 'VazirBold', sans-serif;
+    }
+    .font-vazir {
+      font-family: 'Vazir', sans-serif;
+    }
+    .font-vazir-thin {
+      font-family: 'VazirThin', sans-serif;
+    }
+    .font-vazir-medium {
+      font-family: 'VazirMedium', sans-serif;
+    }
+  }
+  

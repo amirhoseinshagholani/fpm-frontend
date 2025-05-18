@@ -27,14 +27,20 @@ const MobileComponent: React.FC<Props> = ({ totalAmountInvoices, totalAmountPaym
     const safeTotalPayments = Number(totalAmountPayments) || 0;
     const diff = safeTotalInvoices - safeTotalPayments;
 
+    const remaining = Math.max(safeTotalInvoices - safeTotalPayments, 0);
     const data = [
-        { name: 'کل سفارشات', value: safeTotalInvoices, color: '#1E3A8A' },
-        { name: 'بدهی', value: diff > 0 ? diff : 0, color: '#3B82F6' },
-        { name: 'بستانکاری', value: diff < 0 ? Math.abs(diff) : 0, color: '#64748B' },
+        { name: 'جمع مانده', value: remaining, color: '#3B82F6' },
+        { name: 'جمع پرداختی ها', value: safeTotalPayments, color: '#64748B' }
     ];
 
+    // const total = data.reduce((acc, curr) => acc + (curr.value as number), 0);
+    let paidPercent: number = 0;
+    let remainingPercent: number = 0;
 
-    const total = data.reduce((acc, curr) => acc + (curr.value as number), 0);
+    if (safeTotalInvoices > 0) {
+        paidPercent = parseFloat(((totalAmountPayments / safeTotalInvoices) * 100).toFixed(1));
+        remainingPercent = parseFloat((100 - paidPercent).toFixed(1));
+    }
 
 
     const [payments, setPayments] = useState<Payment[]>([]);
@@ -100,21 +106,33 @@ const MobileComponent: React.FC<Props> = ({ totalAmountInvoices, totalAmountPaym
                     <div className="col-span-12 md:col-span-3 flex items-center">
                         <div className="w-full">
                             <ul className="w-full md:w-1/2">
-                                {data.map((entry, index) => {
-                                    const percentage = ((entry.value as number / total) * 100).toFixed(1);
-                                    return (
-                                        <li key={`item-${index}`} className="flex items-center justify-start mb-4">
-                                            <div
-                                                className="w-4 h-4 rounded-sm ml-2"
-                                                style={{ backgroundColor: entry.color }}
-                                            ></div>
-                                            <span className="text-sm font-vazir-bold text-gray-800">{entry.name}:</span>
-                                            <span className="text-sm font-vazir-bold text-gray-600 ml-2">
-                                                ({percentage}%)
-                                            </span>
-                                        </li>
-                                    );
-                                })}
+                            <li className="flex items-center justify-start mb-8 font-bold">
+                                    <span className="text-lg font-vazir-bold text-gray-800 text-nowrap">کل سفارشات:</span>
+                                    <span className="text-lg font-vazir-bold text-gray-600 ml-2">
+                                    {formatNumber(safeTotalInvoices)} 
+                                    </span>
+                                    <span>ریال</span>
+                                </li>
+                                <li className="flex items-center justify-start mb-3">
+                                    <div
+                                        className="w-4 h-4 rounded-sm ml-2"
+                                        style={{ backgroundColor: '#1E3A8A' }}
+                                    ></div>
+                                    <span className="text-sm font-vazir-bold text-gray-800">مانده:</span>
+                                    <span className="text-sm font-vazir-bold text-gray-600 ml-2">
+                                        ({remainingPercent}%)
+                                    </span>
+                                </li>
+                                <li className="flex items-center justify-start mb-3">
+                                    <div
+                                        className="w-4 h-4 rounded-sm ml-2"
+                                        style={{ backgroundColor: '#3B82F6' }}
+                                    ></div>
+                                    <span className="text-sm font-vazir-bold text-gray-800">پرداختی ها:</span>
+                                    <span className="text-sm font-vazir-bold text-gray-600 ml-2">
+                                        ({paidPercent}%)
+                                    </span>
+                                </li>
                             </ul>
                         </div>
                     </div>

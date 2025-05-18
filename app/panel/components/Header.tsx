@@ -24,7 +24,7 @@ const Header = () => {
                         <a href="/panel">داشبورد</a>
                     </li>
                     <li className={styles.loud}>
-                        <a href="/panel/pages/pay">پرداخت</a>
+                        <a href="/panel/pages/pay">لینک ساز</a>
                     </li>
                     <li className={styles.loud}>
                         <a href="/panel/pages/payments">مشاهده پرداختی ها</a>

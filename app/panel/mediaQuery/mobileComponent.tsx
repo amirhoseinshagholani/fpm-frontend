@@ -163,7 +163,7 @@ const MobileComponent: React.FC<Props> = ({ totalAmountInvoices, totalAmountPaym
                                 <div className="mt-1">
                                     <div className="flex justify-between p-3 pt-1 pb-1 rounded-lg text-xs">
                                         <div className="w-30"><span className="font-vazir-medium"></span></div>
-                                        <div className="w-48 text-nowrap" style={{ marginTop: "2px" }}>جمع کل: <span className="font-vazir-medium">{formatNumber(totalAmountPayments)}</span></div>
+                                        {/* <div className="w-48 text-nowrap" style={{ marginTop: "2px" }}>جمع کل: <span className="font-vazir-medium">{formatNumber(totalAmountPayments)}</span></div> */}
                                         <div className="w-30"><span className="font-vazir-medium"></span></div>
                                     </div>
                                 </div>

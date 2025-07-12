@@ -197,7 +197,7 @@ const DesktopComponent: React.FC<Props> = ({ totalAmountInvoices, totalAmountPay
                                     <div className="flex justify-between p-3 pt-1 pb-1 rounded-lg text-xs">
                                         <div className="w-30"><span className="font-vazir-bold"></span><span className="font-vazir-medium"></span></div>
                                         <div className="w-30"><span></span><span className="font-vazir-medium"></span></div>
-                                        <div className="w-30"><span>جمع کل: </span><span className="font-vazir-medium">{formatNumber(totalAmountPayments)}</span></div>
+                                        {/* <div className="w-30"><span>جمع کل: </span><span className="font-vazir-medium">{formatNumber(totalAmountPayments)}</span></div> */}
                                         <div className="w-36"><span></span><span className="font-vazir-medium"></span></div>
                                     </div>
                                 </div>

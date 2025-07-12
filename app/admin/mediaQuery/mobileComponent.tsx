@@ -14,6 +14,7 @@ interface Props {
 }
 
 interface Payment {
+    id: number,
     consumer_mobile: string;
     consumer_name: string;
     amount: number;
@@ -128,6 +129,8 @@ const MobileComponent = () => {
         remainingPercent = parseFloat((100 - paidPercent).toFixed(1));
     }
 
+    const filteredPayments = payments.filter(p => p.status === 2).slice(0, 10);
+
     return (
         <>
             <main className="flex-grow px-4 py-6 font-vazir-bold flex justify-center items-center h-full">
@@ -207,25 +210,27 @@ const MobileComponent = () => {
                     {/* Recent Transactions */}
                     <div className="md:col-span-5 mt-2">
                         <div className="text-center mb-2">تراکنش‌های اخیر</div>
+
                         <div className="space-y-2 max-h-[300px] overflow-y-auto">
-                            {payments.slice(0, 10).map((payment, index) =>
-                                payment.status === 2 ? (
-                                    <div key={index} className="mt-1">
-                                        <div className={`${index % 2 === 0 ? 'bg-blue-400' : 'bg-amber-400'} flex justify-between p-3 pt-1 pb-1 rounded-lg text-xs`}>
-                                            <div className="w-30"><span className="font-vazir-medium">{payment.consumer_name}</span></div>
-                                            <div className="w-30" style={{ marginTop: "2px" }}><span className="font-vazir-medium">{formatNumber(payment.amount)}</span></div>
-                                            <div className="w-36">
-                                                <span className="font-vazir-medium text-nowrap">
-                                                    {
-                                                        "تایید شده"
-                                                    }
-                                                </span>
-                                            </div>
+                            {filteredPayments.map((payment, index) => (
+                                <div key={`${payment.consumer_name}-${payment.amount}-${index}`} className="mt-1">
+                                    <div className={`${index % 2 === 0 ? 'bg-blue-400' : 'bg-amber-400'} flex justify-between p-3 pt-1 pb-1 rounded-lg text-xs`}>
+                                        <div className="w-30">
+                                            <span className="font-vazir-medium">{payment.consumer_name}</span>
+                                        </div>
+                                        <div className="w-30 mt-[2px]">
+                                            <span className="font-vazir-medium">{formatNumber(payment.amount)}</span>
+                                        </div>
+                                        <div className="w-36">
+                                            <span className="font-vazir-medium text-nowrap">تایید شده</span>
                                         </div>
                                     </div>
-                                ) : null
-                            )}
+                                </div>
+                            ))}
                         </div>
+
+
+
                     </div>
                 </div>
             </main>

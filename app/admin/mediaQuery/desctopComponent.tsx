@@ -29,7 +29,7 @@ const DesktopComponent = () => {
     const [countCustomer, setCountCustomer] = useState<number>(0);
     const [countPayments, setCountPayments] = useState<number>(0);
     const token = Cookies.get('fpmToken');
-        const getTotalInvoices = async () => {
+    const getTotalInvoices = async () => {
         try {
             const response = await httpService.get('/invoices/getInvoicesTotalAmount', {
                 headers: { Authorization: `Bearer ${token}` },
@@ -127,7 +127,7 @@ const DesktopComponent = () => {
         paidPercent = parseFloat(((totalPayments / totalInvoices) * 100).toFixed(1));
         remainingPercent = parseFloat((100 - paidPercent).toFixed(1));
     }
-
+    const filteredPayments = payments.filter(p => p.status === 2).slice(0, 10);
     return (
         <>
             <main className="flex-grow p-10 font-vazir-bold flex justify-center items-center h-full">
@@ -172,7 +172,7 @@ const DesktopComponent = () => {
                             ))} */}
                         </div>
 
-                        
+
                         <PieChart width={400} height={400}>
                             <Pie
                                 data={data}
@@ -288,7 +288,7 @@ const DesktopComponent = () => {
                             <div className="text-center">تراکنش های اخیر</div>
                             <div className="mt-4">
 
-                                {payments.slice(0, 10).map((payment, index) => {
+                                {filteredPayments.slice(0, 10).map((payment, index) => {
                                     if (payment.status == 2) {
                                         return (
                                             <div key={index} className="mt-1">
@@ -322,7 +322,7 @@ const DesktopComponent = () => {
                                     <div className="flex justify-between p-3 pt-1 pb-1 rounded-lg text-xs">
                                         <div className="w-30"><span className="font-vazir-bold"></span><span className="font-vazir-medium"></span></div>
                                         <div className="w-30"><span></span><span className="font-vazir-medium"></span></div>
-                                        <div className="w-36 flex"><span className="text-nowrap">جمع کل: </span><span className="font-vazir-medium">{formatNumber(totalPayments)}</span></div>
+                                        {/* <div className="w-36 flex"><span className="text-nowrap">جمع کل: </span><span className="font-vazir-medium">{formatNumber(totalPayments)}</span></div> */}
                                         <div className="w-36"><span></span><span className="font-vazir-medium"></span></div>
                                     </div>
                                 </div>

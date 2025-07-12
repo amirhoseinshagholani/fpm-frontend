@@ -86,10 +86,10 @@ const Pay = () => {
                 headers: { Authorization: `Bearer ${token}` },
             });
             Swal.fire("موفق", "ارسال لینک با موفقیت انجام شد", "success");
-            // setConsumerName("");
-            // setMobile("");
-            // setAmount("");
-            // setDescription("");
+            setConsumerName("");
+            setMobile("");
+            setAmount("");
+            setDescription("");
         } catch (err) {
             console.log(err);
             Swal.fire("خطا", "مشکلی پیش آمده است، لطفا با پشتیبانی تماس بگیرید", "error");

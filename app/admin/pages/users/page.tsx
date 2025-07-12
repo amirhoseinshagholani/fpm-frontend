@@ -92,18 +92,6 @@ const Users = () => {
                 },
             },
             {
-                accessorKey: 'password',
-                header: 'رمزعبور',
-                Cell: ({ cell }) => {
-                    let text = cell.getValue<string>();
-                    return (
-                        <span className={`px-2 py-1 font-vazir-bold text-xs`}>
-                            {text}
-                        </span>
-                    );
-                },
-            },
-            {
                 accessorKey: 'description',
                 header: 'توضیحات',
                 size: 500,

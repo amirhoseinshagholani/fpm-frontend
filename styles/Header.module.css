@@ -29,9 +29,11 @@
 }
 
 .nav li a:hover {
-  background-color: #17a9e7;
+  background-color: #535353;
+  color: #fff;
   border-radius: 100px;
 }
+
 
 .loud {
   text-transform: uppercase;

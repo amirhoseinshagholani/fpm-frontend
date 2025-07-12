@@ -68,9 +68,9 @@ const DesktopComponent: React.FC<Props> = ({ totalAmountInvoices, totalAmountPay
 
     return (
         <>
-            <main className="flex-grow p-10 font-vazir-bold flex justify-center items-center hidden md:block">
-                <div className="p-10 rounded-3xl shadow-2xl bg-white w-full grid grid-cols-12">
-                    <div className="relative w-[400px] h-[400px] col-span-12 md:col-span-4">
+            <main className="flex-grow p-10 font-vazir-bold flex justify-center items-center">
+                <div className="p-10 rounded-3xl shadow-2xl bg-white w-full grid grid-cols-12 h-full">
+                    <div className="relative w-[400px] h-[400px] col-span-12 md:col-span-4 h-full flex items-center">
                         <div className="absolute inset-0 flex flex-col justify-center items-center z-10 text-xs text-gray-800 space-y-3">
                             {/* <div className="text-center leading-tight">
                                 <div className="font-bold">کل سفارشات</div>

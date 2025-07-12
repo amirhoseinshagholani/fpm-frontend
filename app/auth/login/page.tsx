@@ -54,9 +54,9 @@ const Login = () => {
         <>
             <div className="bg-white h-screen text-black">
                 <div className="flex h-screen items-center p-5 md:p-0">
-                    <div className="mx-auto bg-slate-300 shadow-lg w-100 h-2/3 rounded-2xl">
+                    <div className="mx-auto bg-slate-300 shadow-lg w-100 h-1/2 rounded-2xl">
                         <div className="flex mt-5" id="logo">
-                            <Image className="mx-auto" src="/img/logo.webp" alt="logo" width={100} height={100} />
+                            <Image className="mx-auto rounded-lg" src="/img/logo.webp" alt="logo" width={100} height={100} />
                         </div>
                         <div className="mt-3 flex">
                             <div className="mx-auto font-vazir-medium">نام کاربری و رمز عبور خود را وارد کنید</div>
@@ -64,10 +64,6 @@ const Login = () => {
                         <div className="mt-5 p-5">
                             <input onChange={(e) => setUsername(e.target.value)} id="username" value={username} className="bg-white p-1 h-10 rounded-lg shadow-sm w-full focus:outline-none font-vazir-medium mt-2" type="text" placeholder="نام کاربری خود را وارد کنید" />
                             <input onChange={(e) => setPassword(e.target.value)} id="password" value={password} className="bg-white p-1 h-10 rounded-lg shadow-sm w-full focus:outline-none font-vazir-medium mt-2" type="password" placeholder="رمزعبور خود را وارد کنید" />
-                            {/* <div className="gap-2 flex mt-5">
-                                <input onChange={() => setIsRemember(!isRemember)} id="remember" type="checkbox" />
-                                <label className="font-vazir-medium text-sm" htmlFor="remember">مرا به خاطر بسپار</label>
-                            </div> */}
                             <div className="gap-2 flex mt-2">
                                 <input onChange={() => setIsUser(!isUser)} id="isUser" type="checkbox" />
                                 <label className="font-vazir-medium text-sm" htmlFor="isUser">ورود به عنوان ادمین</label>

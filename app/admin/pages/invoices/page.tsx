@@ -174,7 +174,23 @@ const Invoices = () => {
             const sheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[sheetName];
             const jsonData: any = XLSX.utils.sheet_to_json(worksheet);
-            setDataFile(jsonData);
+
+            const allowedKeys = ['وضعیت', 'تاریخ', 'شماره', 'شماره دوم', 'مشتری', 'کد مشتری', 'مبلغ ', 'تخفیف', 'کسورات/اضافات', 'قیمت کل', 'توضیحات', 'نوع'];
+            const keys = Object.keys(jsonData[0]);
+            const invalidKeys = keys.filter(key => allowedKeys.includes(key));
+
+            if (invalidKeys.length > 0) {
+                setDataFile(jsonData);
+            } else {
+                Swal.fire("خطا", "فایل آپلود شده، مناسب نیست!", "warning");
+                setDataFile([]);         // پاک کردن داده فایل
+                setFileName("");         // ریست نام فایل
+
+                const inputElement = document.getElementById("file") as HTMLInputElement;
+                if (inputElement) {
+                    inputElement.value = "";
+                }
+            }
         };
         reader.readAsArrayBuffer(file);
     };
@@ -201,9 +217,27 @@ const Invoices = () => {
                 return;
             }
 
+            const mappedData = dataFile.map((item) => ({
+                invoice_number: item['شماره'] ?? "",
+                invoice_number_2: item['شماره دوم'] ?? "",
+                invoice_date: item['تاریخ'] ?? "",
+                customer_title: item['مشتری'] ?? "",
+                customer_accounting_code: item['کد مشتری'] ?? "",
+                amount: Number(item['مبلغ ']?.toString().replace(/,/g, "")) || 0,
+                discount: Number(item['تخفیف']?.toString().replace(/,/g, "")) || 0,
+                deductions: Number(item['کسورات/اضافات']?.toString().replace(/,/g, "")) || 0,
+                total_amount: Number(item['قیمت کل']?.toString().replace(/,/g, "")) || 0,
+                description: item['توضیحات'] ?? "",
+                type: item['نوع'] ?? "",
+                status: item['وضعیت'] ?? "",
+            }));
+
+            setData(mappedData);
+            Swal.fire("موفق", "بروزرسانی با موفقیت انجام شد", "success");
+
             Swal.fire("موفق", "بروزرسانی با موفقیت انجام شد", "success");
             // await getCustomers();
-            setData(dataFile); // نمایش اطلاعات جدید در جدول
+            // setData(dataFile); // نمایش اطلاعات جدید در جدول
             setFileName("");
         } catch (err) {
             Swal.fire("خطا", "ارسال اطلاعات با مشکل مواجه شد", "error");

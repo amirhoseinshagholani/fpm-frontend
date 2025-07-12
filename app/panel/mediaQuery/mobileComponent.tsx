@@ -66,7 +66,7 @@ const MobileComponent: React.FC<Props> = ({ totalAmountInvoices, totalAmountPaym
 
     return (
         <>
-            <main className="flex-grow p-10 pt-5 font-vazir-bold flex justify-center items-center block md:hidden">
+            <main className="flex-grow p-10 pt-5 font-vazir-bold flex justify-center items-center">
                 <div className="p-10 rounded-3xl shadow-2xl bg-white w-full grid grid-cols-12">
                     <div className="relative w-full h-[240px] md:w-[400px] md:h-[400px] col-span-12 md:col-span-4 mx-auto">
                         <div className="absolute inset-0 flex flex-col justify-center items-center z-10 text-[10px] md:text-xs text-gray-800 space-y-2">

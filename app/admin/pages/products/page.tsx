@@ -8,6 +8,10 @@ import Cookies from 'js-cookie';
 import formatNumber from "../../functions/formatNumber";
 
 const Products = () => {
+    const [data, setData] = useState<any[]>([]);
+    const [dataFile, setDataFile] = useState<any[]>([]);
+    const [fileName, setFileName] = useState("");
+
     const columns: MRT_ColumnDef<any>[] = useMemo(
         () => [
             {
@@ -85,10 +89,6 @@ const Products = () => {
         []
     );
 
-    const [data, setData] = useState<any[]>([]);
-    const [dataFile, setDataFile] = useState<any[]>([]);
-    const [fileName, setFileName] = useState("");
-
     const getProducts = async () => {
         const token = Cookies.get('fpmToken');
         try {
@@ -103,11 +103,11 @@ const Products = () => {
 
     useEffect(() => {
         getProducts();
-    }, [data]);
+    }, []);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
-        const file = e.target.files?.[0];
+        let file = e.target.files?.[0];
         setFileName(file?.name || "");
 
         if (!file) return;
@@ -122,7 +122,31 @@ const Products = () => {
             const sheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[sheetName];
             const jsonData: any = XLSX.utils.sheet_to_json(worksheet);
-            setDataFile(jsonData);
+
+            const allowedKeys = ['کد جنس', 'شرح جنس', 'قیمت فروش', 'موجودی کل تعداد', 'موجودی کل مقدار', 'بارکد', 'کد فنی'];
+            const keys = Object.keys(jsonData[0]);
+            const invalidKeys = keys.filter(key => allowedKeys.includes(key));
+
+            // console.log(allowedKeys);
+            // console.log(keys);
+            // console.log(invalidKeys);
+
+            if (invalidKeys.length > 0) {
+                setDataFile(jsonData);
+            } else {
+                Swal.fire("خطا", "فایل آپلود شده، مناسب نیست!", "warning");
+                setDataFile([]);         // پاک کردن داده فایل
+                setFileName("");         // ریست نام فایل
+
+                // ریست ورودی فایل:
+                const inputElement = document.getElementById("file") as HTMLInputElement;
+                if (inputElement) {
+                    inputElement.value = "";
+                }
+            }
+
+
+
         };
         reader.readAsArrayBuffer(file);
     };
@@ -135,6 +159,7 @@ const Products = () => {
             Swal.fire("خطا", "هیچ دیتایی خوانده نشد، لطفا دوباره امتحان کنید", "error");
             return;
         }
+        console.log(dataFile);
 
         try {
             const response = await httpService.post('/products/updateProductsList', {
@@ -149,9 +174,18 @@ const Products = () => {
                 return;
             }
 
+            const mappedData = dataFile.map((item) => ({
+                accounting_code: item['کد جنس'],
+                title: item['شرح جنس'],
+                price: item['قیمت فروش'],
+                inventory: item['موجودی کل مقدار'] ?? item['موجودی کل تعداد'] ?? '',
+                barcode: item['بارکد'],
+                technical_code: item['کد فنی'],
+            }));
+            setData(mappedData);
             Swal.fire("موفق", "بروزرسانی با موفقیت انجام شد", "success");
-            // await getCustomers();
-            setData(dataFile); // نمایش اطلاعات جدید در جدول
+
+            // setData(dataFile);
             setFileName("");
         } catch (err) {
             Swal.fire("خطا", "ارسال اطلاعات با مشکل مواجه شد", "error");

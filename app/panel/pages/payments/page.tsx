@@ -1,5 +1,4 @@
 'use client';
-import * as XLSX from "xlsx";
 import { useEffect, useState, useMemo } from "react";
 import { MaterialReactTable, MRT_ColumnDef, useMaterialReactTable } from "material-react-table";
 import Swal from "sweetalert2";
@@ -9,6 +8,13 @@ import formatNumber from "../../functions/formatNumber";
 
 const Payments = () => {
     const accounting_code = Cookies.get('fpmUsername')?.slice(0, 7);
+    const [data, setData] = useState<any[]>([]);
+    const [totals, setTotals] = useState({ amount: 0 });
+
+    useEffect(() => {
+        const totalAmount = data.reduce((sum, row) => sum + Number(row.amount || 0), 0);
+        setTotals({ amount: totalAmount });
+    }, [data]);
 
     const columns: MRT_ColumnDef<any>[] = useMemo(
         () => [
@@ -46,6 +52,11 @@ const Payments = () => {
                         </span>
                     )
                 },
+                Footer: () => (
+                    <span className="font-bold text-xs block text-right">
+                        {`جمع : ${formatNumber(totals.amount)} ریال`}
+                    </span>
+                )
             },
             {
                 accessorKey: 'status',
@@ -98,12 +109,8 @@ const Payments = () => {
                 },
             }
         ],
-        []
+        [totals]
     );
-
-    const [data, setData] = useState<any[]>([]);
-    const [dataFile, setDataFile] = useState<any[]>([]);
-    const [fileName, setFileName] = useState("");
 
     const getPayments = async () => {
         const token = Cookies.get('fpmToken');
@@ -133,7 +140,6 @@ const Payments = () => {
         layoutMode: 'grid',
         getRowId: (row, index) => `${row.accounting_code}-${index}`, // تضمین یکتایی
     });
-
 
     return (
         <main className="flex-grow p-4 font-vazir flex mt-5">

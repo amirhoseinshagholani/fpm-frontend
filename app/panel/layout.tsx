@@ -28,7 +28,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="flex flex-col min-h-screen bg-gray-200 text-gray-800">
+        <div className="flex flex-col min-h-screen bg-gray-200 text-gray-800 h-screen">
             <Header />
             {children}
             <Footer />

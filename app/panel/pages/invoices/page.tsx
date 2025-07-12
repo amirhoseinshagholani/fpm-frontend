@@ -9,6 +9,42 @@ import formatNumber from "../../functions/formatNumber";
 
 const Invoices = () => {
     const accounting_code = Cookies.get('fpmUsername')?.slice(0, 7);
+    const [totals, setTotals] = useState({ amount: 0, discount: 0, total_amount: 0 });
+
+
+
+    const [data, setData] = useState<any[]>([]);
+    const [dataFile, setDataFile] = useState<any[]>([]);
+    const [fileName, setFileName] = useState("");
+
+    const getInvoices = async () => {
+        const token = Cookies.get('fpmToken');
+        try {
+            const response = await httpService.post('/invoices/getCustomersInvoices', {
+                accounting_code: accounting_code
+            }, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            // console.log(response);
+
+            setData(response.data['data']);
+        } catch (err) {
+            Swal.fire("خطا", "دریافت اطلاعات فاکتورها با مشکل مواجه شد", "error");
+        }
+    };
+
+    useEffect(() => {
+        getInvoices();
+    }, []);
+
+    useEffect(() => {
+        const newTotals = {
+            amount: data.reduce((sum, row) => sum + Number(row.amount || 0), 0),
+            discount: data.reduce((sum, row) => sum + Number(row.discount || 0), 0),
+            total_amount: data.reduce((sum, row) => sum + Number(row.total_amount || 0), 0),
+        };
+        setTotals(newTotals);
+    }, [data]);
 
     const columns: MRT_ColumnDef<any>[] = useMemo(
         () => [
@@ -66,9 +102,14 @@ const Invoices = () => {
                     return (
                         <span className={`px-2 py-1 font-vazir-bold text-xs`}>
                             {`${formatNumber(Number(cell.getValue()))} ریال`}
-                        </span>
+                        </span> 
                     )
                 },
+                Footer: () => (
+                    <span className="font-bold text-xs text-right block">
+                        {`جمع : ${formatNumber(totals.total_amount)} ریال`}
+                    </span>
+                )
             },
             {
                 accessorKey: 'status',
@@ -94,85 +135,61 @@ const Invoices = () => {
                     );
                 },
             }],
-        []
+        [totals]
     );
 
-    const [data, setData] = useState<any[]>([]);
-    const [dataFile, setDataFile] = useState<any[]>([]);
-    const [fileName, setFileName] = useState("");
+    // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     e.preventDefault();
+    //     const file = e.target.files?.[0];
+    //     setFileName(file?.name || "");
 
-    const getInvoices = async () => {
-        const token = Cookies.get('fpmToken');
-        try {
-            const response = await httpService.post('/invoices/getCustomersInvoices', {
-                accounting_code: accounting_code
-            }, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            // console.log(response);
+    //     if (!file) return;
 
-            setData(response.data['data']);
-        } catch (err) {
-            Swal.fire("خطا", "دریافت اطلاعات فاکتورها با مشکل مواجه شد", "error");
-        }
-    };
+    //     const reader = new FileReader();
+    //     reader.onload = (event) => {
+    //         const arrayBuffer = event.target?.result;
+    //         if (!arrayBuffer) return;
 
-    useEffect(() => {
-        getInvoices();
-    }, []);
+    //         const data = new Uint8Array(arrayBuffer as ArrayBuffer);
+    //         const workbook = XLSX.read(data, { type: "array" });
+    //         const sheetName = workbook.SheetNames[0];
+    //         const worksheet = workbook.Sheets[sheetName];
+    //         const jsonData: any = XLSX.utils.sheet_to_json(worksheet);
+    //         setDataFile(jsonData);
+    //     };
+    //     reader.readAsArrayBuffer(file);
+    // };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        const file = e.target.files?.[0];
-        setFileName(file?.name || "");
+    // const handleSubmit = async (e: any) => {
+    //     e.preventDefault();
+    //     const token = Cookies.get('fpmToken');
 
-        if (!file) return;
+    //     if (!dataFile.length) {
+    //         Swal.fire("خطا", "هیچ دیتایی خوانده نشد، لطفا دوباره امتحان کنید", "error");
+    //         return;
+    //     }
 
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            const arrayBuffer = event.target?.result;
-            if (!arrayBuffer) return;
+    //     try {
+    //         const response = await httpService.post('/invoices/updateInvoicesList', {
+    //             invoicesList: dataFile,
+    //         }, {
+    //             headers: { Authorization: `Bearer ${token}` },
+    //         });
+    //         console.log(response);
 
-            const data = new Uint8Array(arrayBuffer as ArrayBuffer);
-            const workbook = XLSX.read(data, { type: "array" });
-            const sheetName = workbook.SheetNames[0];
-            const worksheet = workbook.Sheets[sheetName];
-            const jsonData: any = XLSX.utils.sheet_to_json(worksheet);
-            setDataFile(jsonData);
-        };
-        reader.readAsArrayBuffer(file);
-    };
+    //         if (!response.data.success) {
+    //             Swal.fire("خطا", "مشکلی پیش آمده است، لطفا با پشتیبانی تماس بگیرید", "error");
+    //             return;
+    //         }
 
-    const handleSubmit = async (e: any) => {
-        e.preventDefault();
-        const token = Cookies.get('fpmToken');
-
-        if (!dataFile.length) {
-            Swal.fire("خطا", "هیچ دیتایی خوانده نشد، لطفا دوباره امتحان کنید", "error");
-            return;
-        }
-
-        try {
-            const response = await httpService.post('/invoices/updateInvoicesList', {
-                invoicesList: dataFile,
-            }, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            console.log(response);
-
-            if (!response.data.success) {
-                Swal.fire("خطا", "مشکلی پیش آمده است، لطفا با پشتیبانی تماس بگیرید", "error");
-                return;
-            }
-
-            Swal.fire("موفق", "بروزرسانی با موفقیت انجام شد", "success");
-            // await getCustomers();
-            setData(dataFile); // نمایش اطلاعات جدید در جدول
-            setFileName("");
-        } catch (err) {
-            Swal.fire("خطا", "ارسال اطلاعات با مشکل مواجه شد", "error");
-        }
-    };
+    //         Swal.fire("موفق", "بروزرسانی با موفقیت انجام شد", "success");
+    //         // await getCustomers();
+    //         setData(dataFile); // نمایش اطلاعات جدید در جدول
+    //         setFileName("");
+    //     } catch (err) {
+    //         Swal.fire("خطا", "ارسال اطلاعات با مشکل مواجه شد", "error");
+    //     }
+    // };
 
     const table = useMaterialReactTable({
         columns,

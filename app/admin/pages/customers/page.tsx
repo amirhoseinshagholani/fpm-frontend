@@ -186,7 +186,7 @@ const Customers = () => {
 
     useEffect(() => {
         getCustomers();
-    }, [data]);
+    }, []);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -205,7 +205,26 @@ const Customers = () => {
             const sheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[sheetName];
             const jsonData: any = XLSX.utils.sheet_to_json(worksheet);
-            setDataFile(jsonData);
+
+            const allowedKeys = ['عنوان', 'نام', 'نام خانوادگی', 'کد حسابداری', 'موبایل', 'تلفن', 'استان', 'شهر', 'آدرس', 'بازاریاب', 'نام کاربری', 'رمزعبور'];
+            const keys = Object.keys(jsonData[0]);
+            const invalidKeys = keys.filter(key => allowedKeys.includes(key));
+
+            if (invalidKeys.length > 0) {
+                setDataFile(jsonData);
+            } else {
+                Swal.fire("خطا", "فایل آپلود شده، مناسب نیست!", "warning");
+                setDataFile([]);
+                setFileName("");
+
+                // ریست ورودی فایل:
+                const inputElement = document.getElementById("file") as HTMLInputElement;
+                if (inputElement) {
+                    inputElement.value = "";
+                }
+            }
+
+            // setDataFile(jsonData);
         };
         reader.readAsArrayBuffer(file);
     };
@@ -231,10 +250,25 @@ const Customers = () => {
                 return;
             }
 
+            const mappedData = dataFile.map((item) => ({
+                accounting_code: item['کد حسابداری'],
+                title: item['عنوان'],
+                name: item['نام'],
+                last_name: item['نام خانوادگی'],
+                mobile: item['موبایل'],
+                tell: item['تلفن'],
+                province: item['استان'],
+                city: item['شهر'],
+                address: item['آدرس'],
+                marketer: item['بازاریاب'],
+                username: item['نام کاربری'],
+                password: item['رمزعبور'],
+            }));
+
+            setData(mappedData);
 
             Swal.fire("موفق", "بروزرسانی با موفقیت انجام شد", "success");
-            // await getCustomers();
-            setData(dataFile); // نمایش اطلاعات جدید در جدول
+
             setFileName("");
         } catch (err) {
             console.log(err);

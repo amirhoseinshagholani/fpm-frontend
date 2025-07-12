@@ -179,7 +179,7 @@ const Payments = () => {
 
     useEffect(() => {
         getCustomers();
-    }, [customers]);
+    }, []);
 
     const normalize = (str: string) =>
         str

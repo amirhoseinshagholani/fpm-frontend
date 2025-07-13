@@ -14,6 +14,7 @@ interface Props {
 }
 
 interface Payment {
+    tracking_code:string,
     consumer_mobile: string;
     consumer_name: string;
     amount: number;
@@ -70,7 +71,7 @@ const DesktopComponent: React.FC<Props> = ({ totalAmountInvoices, totalAmountPay
         <>
             <main className="flex-grow p-10 font-vazir-bold flex justify-center items-center">
                 <div className="p-10 rounded-3xl shadow-2xl bg-white w-full grid grid-cols-12 h-full">
-                    <div className="relative w-[400px] h-[400px] col-span-12 md:col-span-4 h-full flex items-center">
+                    <div className="sm:col-span-12 md:col-span-12 lg:col-span-3 xl:col-span-3 2xl:col-span-3 relative w-[400px] h-[400px] md:mx-auto h-full flex items-center">
                         <div className="absolute inset-0 flex flex-col justify-center items-center z-10 text-xs text-gray-800 space-y-3">
                             {/* <div className="text-center leading-tight">
                                 <div className="font-bold">کل سفارشات</div>
@@ -108,13 +109,13 @@ const DesktopComponent: React.FC<Props> = ({ totalAmountInvoices, totalAmountPay
                             <Tooltip formatter={(value: number) => `${formatNumber(value)} ریال`} />
                         </PieChart>
                     </div>
-                    <div className="col-span-12 md:col-span-3 flex items-center">
-                        <div className="w-full">
+                    <div className="sm:col-span-12 md:col-span-12 lg:col-span-9 xl:col-span-3 2xl:col-span-3 md:mt-5 flex items-center">
+                        <div className="mx-auto">
                             <ul className="w-full md:w-1/2">
                                 <li className="flex items-center justify-start mb-8 font-bold">
                                     <span className="text-lg font-vazir-bold text-gray-800 text-nowrap">کل سفارشات:</span>
                                     <span className="text-lg font-vazir-bold text-gray-600 ml-2">
-                                    {formatNumber(safeTotalInvoices)} 
+                                        {formatNumber(safeTotalInvoices)}
                                     </span>
                                     <span>ریال</span>
                                 </li>
@@ -133,7 +134,7 @@ const DesktopComponent: React.FC<Props> = ({ totalAmountInvoices, totalAmountPay
                                         className="w-4 h-4 rounded-sm ml-2"
                                         style={{ backgroundColor: '#3B82F6' }}
                                     ></div>
-                                    <span className="text-sm font-vazir-bold text-gray-800">پرداختی ها:</span>
+                                    <span className="text-sm font-vazir-bold text-gray-800 text-nowrap">پرداختی ها:</span>
                                     <span className="text-sm font-vazir-bold text-gray-600 ml-2">
                                         ({paidPercent}%)
                                     </span>
@@ -158,28 +159,32 @@ const DesktopComponent: React.FC<Props> = ({ totalAmountInvoices, totalAmountPay
                             </ul>
                         </div>
                     </div>
-                    <div className="col-span-12 md:col-span-5 flex items-center">
+                    <div className="sm:col-span-12 md:col-span-12 lg:col-span-12 xl:col-span-12 2xl:col-span-6 md:mt-5 flex items-center">
                         <div className="w-full">
                             <div className="text-center">تراکنش های اخیر</div>
                             <div className="mt-4">
 
                                 {payments.slice(0, 10).map((payment, index) => (
                                     <div key={index} className="mt-1">
-                                        <div className={`${index % 2 === 0 ? 'bg-blue-400' : 'bg-amber-400'} flex justify-between p-3 pt-1 pb-1 rounded-lg text-xs`}>
-                                            <div className="w-30">
-                                                <span className="font-vazir-bold">نام: </span>
-                                                <span className="font-vazir-medium">{payment.consumer_name}</span>
+                                        <div className={`${index % 2 === 0 ? 'bg-blue-400' : 'bg-amber-400'} flex justify-between gap-3 p-3 pt-1 pb-1 rounded-lg text-xs`}>
+                                            <div className="w-30 flex">
+                                                <span className="font-vazir-bold hidden lg:block">نام: </span>
+                                                <span className="font-vazir-medium text-nowrap">{payment.consumer_name}</span>
                                             </div>
-                                            <div className="w-30">
-                                                <span>موبایل: </span>
+                                            <div className="w-30 flex">
+                                                <span className="font-vazir-bold hidden lg:block">موبایل: </span>
                                                 <span className="font-vazir-medium">{payment.consumer_mobile}</span>
                                             </div>
-                                            <div className="w-30">
-                                                <span>مبلغ: </span>
+                                            <div className="w-20 flex">
+                                                <span className="font-vazir-bold">مبلغ: </span>
                                                 <span className="font-vazir-medium">{formatNumber(payment.amount)}</span>
                                             </div>
-                                            <div className="w-36 text-nowrap">
-                                                <span>وضعیت: </span>
+                                            <div className="w-40 block">
+                                                <span className="font-vazir-bold hidden md:block">کدپیگیری: </span>
+                                                <span className="font-vazir-medium hidden md:block">{payment.tracking_code}</span>
+                                            </div>
+                                            <div className="w-30 text-nowrap">
+                                                {/* <span>وضعیت: </span> */}
                                                 <span className="font-vazir-medium">
                                                     {
                                                         payment.status === 0 ? "در انتظار پرداخت" :

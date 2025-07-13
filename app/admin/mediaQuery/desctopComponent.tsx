@@ -14,6 +14,8 @@ interface Props {
 }
 
 interface Payment {
+    tracking_code:string;
+    customer_title: string;
     consumer_mobile: string;
     consumer_name: string;
     amount: number;
@@ -132,12 +134,9 @@ const DesktopComponent = () => {
         <>
             <main className="flex-grow p-10 font-vazir-bold flex justify-center items-center h-full">
                 <div className="p-10 rounded-3xl shadow-2xl bg-white w-full h-full grid grid-cols-12">
-                    <div className="relative w-[400px] h-[400px] col-span-12 md:col-span-4 flex items-center h-full">
+
+                    <div className="sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 2xl:col-span-3 relative w-[400px] h-[400px] flex items-center h-full">
                         <div className="absolute inset-0 flex flex-col justify-center items-center z-10 text-xs text-gray-800 space-y-3">
-                            {/* <div className="text-center leading-tight">
-                                <div className="font-bold">کل سفارشات</div>
-                                <div>{formatNumber(safeTotalInvoices as number)} ریال</div>
-                            </div> */}
                             <div className="flex items-center space-x-2">
                                 <div
                                     className="w-3 h-3 rounded-sm"
@@ -158,21 +157,7 @@ const DesktopComponent = () => {
                                     <div>{formatNumber(paidPercent as number)} %</div>
                                 </div>
                             </div>
-                            {/* {data.map((item, idx) => (
-                                <div key={idx} className="flex items-center space-x-2">
-                                    <div
-                                        className="w-3 h-3 rounded-sm"
-                                        style={{ backgroundColor: COLORS[idx % COLORS.length] }}
-                                    />
-                                    <div className="text-center leading-tight">
-                                        <div className="font-bold">مانده</div>
-                                        <div>{formatNumber(remainingPercent as number)} %</div>
-                                    </div>
-                                </div>
-                            ))} */}
                         </div>
-
-
                         <PieChart width={400} height={400}>
                             <Pie
                                 data={data}
@@ -191,7 +176,7 @@ const DesktopComponent = () => {
                             <Tooltip formatter={(value: number) => `${formatNumber(value)} ریال`} />
                         </PieChart>
                     </div>
-                    <div className="col-span-12 md:col-span-3 flex items-center">
+                    <div className="sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 2xl:col-span-3 2xl:mx-auto flex items-center">
                         <div className="w-full">
                             <ul className="w-full md:w-fit">
                                 <li className="flex items-center justify-start mb-8 font-bold bg-gray-200 p-3 rounded-xl gap-1">
@@ -243,47 +228,11 @@ const DesktopComponent = () => {
                                         {formatNumber(countPayments as number)}
                                     </span>
                                 </li>
-                                {/* <li className="flex items-center justify-start mb-3">
-                                    <div
-                                        className="w-4 h-4 rounded-sm ml-2"
-                                        style={{ backgroundColor: '#1E3A8A' }}
-                                    ></div>
-                                    <span className="text-sm font-vazir-bold text-gray-800">مانده:</span>
-                                    <span className="text-sm font-vazir-bold text-gray-600 ml-2">
-                                        ({remainingPercent}%)
-                                    </span>
-                                </li>
-                                <li className="flex items-center justify-start mb-3">
-                                    <div
-                                        className="w-4 h-4 rounded-sm ml-2"
-                                        style={{ backgroundColor: '#3B82F6' }}
-                                    ></div>
-                                    <span className="text-sm font-vazir-bold text-gray-800">پرداختی ها:</span>
-                                    <span className="text-sm font-vazir-bold text-gray-600 ml-2">
-                                        ({paidPercent}%)
-                                    </span>
-                                </li> */}
-
-                                {/* {data.map((entry, index) => {
-                                    const percentage = ((entry.value / total) * 100).toFixed(1);
-                                    return (
-                                        <li key={`item-${index}`} className="flex items-center justify-start mb-4">
-                                            <div
-                                                className="w-4 h-4 rounded-sm ml-2"
-                                                style={{ backgroundColor: entry.color }}
-                                            ></div>
-                                            <span className="text-sm font-vazir-bold text-gray-800">{entry.name}:</span>
-                                            <span className="text-sm font-vazir-bold text-gray-600 ml-2">
-                                                ({percentage}%)
-                                            </span>
-                                        </li>
-                                    );
-                                })} */}
 
                             </ul>
                         </div>
                     </div>
-                    <div className="col-span-12 md:col-span-5 flex items-center">
+                    <div className="sm:col-span-12 md:col-span-12 lg:col-span-12 xl:col-span-12 2xl:col-span-6 flex items-center">
                         <div className="w-full">
                             <div className="text-center">تراکنش های اخیر</div>
                             <div className="mt-4">
@@ -294,9 +243,16 @@ const DesktopComponent = () => {
                                             <div key={index} className="mt-1">
                                                 <div className={`${index % 2 === 0 ? 'bg-blue-400' : 'bg-amber-400'} flex justify-between p-3 pt-1 pb-1 rounded-lg text-xs`}>
                                                     <div className="w-30">
+                                                        <span className="font-vazir-medium">{payment.customer_title}</span>
+                                                    </div>
+                                                    <div className="w-30">
                                                         <span className="font-vazir-bold">نام: </span>
                                                         <span className="font-vazir-medium">{payment.consumer_name}</span>
                                                     </div>
+                                                    {/* <div className="w-30">
+                                                        <span className="font-vazir-bold">کدپیگیری: </span>
+                                                        <span className="font-vazir-medium">{payment.tracking_code}</span>
+                                                    </div> */}
                                                     <div className="w-30">
                                                         <span>موبایل: </span>
                                                         <span className="font-vazir-medium">{payment.consumer_mobile}</span>
@@ -322,7 +278,6 @@ const DesktopComponent = () => {
                                     <div className="flex justify-between p-3 pt-1 pb-1 rounded-lg text-xs">
                                         <div className="w-30"><span className="font-vazir-bold"></span><span className="font-vazir-medium"></span></div>
                                         <div className="w-30"><span></span><span className="font-vazir-medium"></span></div>
-                                        {/* <div className="w-36 flex"><span className="text-nowrap">جمع کل: </span><span className="font-vazir-medium">{formatNumber(totalPayments)}</span></div> */}
                                         <div className="w-36"><span></span><span className="font-vazir-medium"></span></div>
                                     </div>
                                 </div>
@@ -331,6 +286,7 @@ const DesktopComponent = () => {
                             </div>
                         </div>
                     </div>
+
                 </div>
             </main>
         </>

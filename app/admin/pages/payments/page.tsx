@@ -29,6 +29,7 @@ interface Payment {
     id: number;
     refer_to: number;
     customer_accounting_code: string;
+    tracking_code: string;
     token: string;
     url_payment: string;
     consumer_mobile: string;
@@ -81,6 +82,18 @@ const Payments = () => {
                             {`${formatNumber(Number(cell.getValue()))} ریال`}
                         </span>
                     )
+                },
+            },
+            {
+                accessorKey: 'tracking_code',
+                header: 'کدپیگیری',
+                Cell: ({ cell }) => {
+                    let text = cell.getValue<string>();
+                    return (
+                        <span className={`px-2 py-1 font-vazir-bold text-xs`}>
+                            {text}
+                        </span>
+                    );
                 },
             },
             {
@@ -202,7 +215,7 @@ const Payments = () => {
     const handleChangeCustomer = async (accounting_code: string) => {
         try {
             const response = await httpService.post('/payments/getCustomersInvoicesPayment', {
-                accounting_code:accounting_code
+                accounting_code: accounting_code
             }, {
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -231,39 +244,39 @@ const Payments = () => {
                                 backgroundColor: '#f1f2f2',
                                 color: '#3d3e3e',
                                 borderColor: '#3d3e3e',
-                                fontSize:13
+                                fontSize: 13
                             }),
                             input: (base) => ({
                                 ...base,
                                 color: '#3d3e3e',
-                                fontSize:13
+                                fontSize: 13
                             }),
                             placeholder: (base) => ({
                                 ...base,
                                 color: '#3d3e3e',
-                                fontSize:13
+                                fontSize: 13
                             }),
                             singleValue: (base) => ({
                                 ...base,
                                 color: '#3d3e3e',
-                                fontSize:13
+                                fontSize: 13
                             }),
                             menu: (base) => ({
                                 ...base,
                                 backgroundColor: '#f1f2f2',
                                 zIndex: 9999,
-                                fontSize:13
+                                fontSize: 13
                             }),
                             option: (base, state) => ({
                                 ...base,
                                 backgroundColor: state.isFocused ? '#f1f2f2' : '#f1f2f2',
                                 color: '#3d3e3e',
-                                fontSize:13
+                                fontSize: 13
                             }),
                             menuPortal: (base) => ({
                                 ...base,
                                 zIndex: 9999,
-                                fontSize:13
+                                fontSize: 13
                             }),
                         }}
                     />

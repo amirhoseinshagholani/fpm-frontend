@@ -59,6 +59,18 @@ const Payments = () => {
                 )
             },
             {
+                accessorKey: 'tracking_code',
+                header: 'کدپیگیری',
+                Cell: ({ cell }) => {
+                    let text = cell.getValue<string>();
+                    return (
+                        <span className={`px-2 py-1 font-vazir-bold text-xs`}>
+                            {text}
+                        </span>
+                    );
+                },
+            },
+            {
                 accessorKey: 'status',
                 header: 'وضعیت',
                 Cell: ({ cell }) => {

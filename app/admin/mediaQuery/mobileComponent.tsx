@@ -15,6 +15,7 @@ interface Props {
 
 interface Payment {
     id: number,
+    customer_title:string;
     consumer_mobile: string;
     consumer_name: string;
     amount: number;
@@ -215,13 +216,16 @@ const MobileComponent = () => {
                             {filteredPayments.map((payment, index) => (
                                 <div key={`${payment.consumer_name}-${payment.amount}-${index}`} className="mt-1">
                                     <div className={`${index % 2 === 0 ? 'bg-blue-400' : 'bg-amber-400'} flex justify-between p-3 pt-1 pb-1 rounded-lg text-xs`}>
-                                        <div className="w-30">
-                                            <span className="font-vazir-medium">{payment.consumer_name}</span>
+                                        <div className="w-36">
+                                            <span className="font-vazir-medium">{payment.customer_title}</span>
+                                        </div>
+                                        <div className="w-32">
+                                            <span className="font-vazir-medium mr-2 text-nowrap">{payment.consumer_name}</span>
                                         </div>
                                         <div className="w-30 mt-[2px]">
-                                            <span className="font-vazir-medium">{formatNumber(payment.amount)}</span>
+                                            <span className="font-vazir-medium mr-2">{formatNumber(payment.amount)}</span>
                                         </div>
-                                        <div className="w-36">
+                                        <div className="w-30">
                                             <span className="font-vazir-medium text-nowrap">تایید شده</span>
                                         </div>
                                     </div>

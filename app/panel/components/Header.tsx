@@ -21,19 +21,19 @@ const Header = () => {
             <header className={`font-vazir-bold text-black bg-yellow-400 rounded-b-2xl hidden md:block ${styles.header} ${styles.active}`}>
                 <ul className={styles.nav}>
                     <li className={styles.loud}>
-                        <a href="/panel">داشبورد</a>
+                        <a href="/panel/panel">داشبورد</a>
                     </li>
                     <li className={styles.loud}>
-                        <a href="/panel/pages/pay">لینک ساز</a>
+                        <a href="/panel/panel/pages/pay">لینک ساز</a>
                     </li>
                     <li className={styles.loud}>
-                        <a href="/panel/pages/payments">مشاهده پرداختی ها</a>
+                        <a href="/panel/panel/pages/payments">مشاهده پرداختی ها</a>
                     </li>
                     <li className={styles.loud}>
-                        <a href="/panel/pages/invoices">سفارشات</a>
+                        <a href="/panel/panel/pages/invoices">سفارشات</a>
                     </li>
                     <li className={styles.loud}>
-                        <a href="/auth/login">خروج</a>
+                        <a href="/panel/auth/login">خروج</a>
                     </li>
                 </ul>
             </header>
@@ -41,19 +41,19 @@ const Header = () => {
             <header className={`font-vazir-bold text-black bg-yellow-400 rounded-b-2xl block md:hidden ${styles.header} ${active ? styles.active : ''}`}>
                 <ul className={`${styles.nav}`}>
                     <li className={styles.loud}>
-                        <a href="/panel">داشبورد</a>
+                        <a href="/panel/panel/panel">داشبورد</a>
                     </li>
                     <li className={styles.loud}>
-                        <a href="/panel/pages/pay">پرداخت</a>
+                        <a href="/panel/panel/pages/pay">پرداخت</a>
                     </li>
                     <li className={styles.loud}>
-                        <a href="/panel/pages/payments">مشاهده پرداختی ها</a>
+                        <a href="/panel/panel/pages/payments">مشاهده پرداختی ها</a>
                     </li>
                     <li className={styles.loud}>
-                        <a href="/panel/pages/orders">سفارشات</a>
+                        <a href="/panel/panel/pages/orders">سفارشات</a>
                     </li>
                     <li className={styles.loud}>
-                        <a href="/auth/login">خروج</a>
+                        <a href="/panel/auth/login">خروج</a>
                     </li>
                 </ul>
                 <div onClick={()=>tooglestatus()} className='flex'>

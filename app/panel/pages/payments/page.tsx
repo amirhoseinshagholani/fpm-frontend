@@ -5,6 +5,8 @@ import Swal from "sweetalert2";
 import { httpService } from "@/app/functions/httpService";
 import Cookies from 'js-cookie';
 import formatNumber from "../../functions/formatNumber";
+import { gregorianToJalali } from "@/app/functions/gregorianToJalali";
+
 
 const Payments = () => {
     const accounting_code = Cookies.get('fpmUsername')?.slice(0, 7);
@@ -112,10 +114,10 @@ const Payments = () => {
                 accessorKey: 'created_at',
                 header: 'تاریخ',
                 Cell: ({ cell }) => {
-                    let text = cell.getValue<string>();
+                    const text = cell.getValue<string>(); // مثل "2025-08-17T07:03:05.462Z"
                     return (
-                        <span className={`px-2 py-1 font-vazir-bold text-xs`}>
-                            {text.split('T')[0]}
+                        <span className="px-2 py-1 font-vazir-bold text-xs">
+                            {gregorianToJalali(text)}
                         </span>
                     );
                 },

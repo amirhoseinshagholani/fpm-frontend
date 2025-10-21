@@ -60,7 +60,6 @@ const Pay = () => {
         }
 
         const tracking_code = generateRandomToken();
-
         const params = new URLSearchParams({
             consumerName,
             mobile,
@@ -69,7 +68,8 @@ const Pay = () => {
             tracking_code
         });
 
-        const link = `https://netxpert.net/#/fpm?${params.toString()}`;
+        const link = `https://shop.nekatel.com/fpm?${params.toString()}`;
+        // const link = `testii`;
         console.log(link);
 
         try {

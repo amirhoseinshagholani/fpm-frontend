@@ -38,7 +38,7 @@ const MobileComponent = () => {
             });
             setTotalInvoices(response.data["data"][0].total_amounts_invoices);
         } catch (err) {
-            Swal.fire("خطا", "دریافت اطلاعات با مشکل مواجه شد", "error");
+            Swal.fire("خطا", "دریافت اطلاعات با مشکل مواجه شد"+err, "error");
         }
     };
     const getTotalPayments = async () => {
@@ -48,7 +48,7 @@ const MobileComponent = () => {
             });
             setTotalPayments(response.data["data"][0].total_payments);
         } catch (err) {
-            Swal.fire("خطا", "دریافت اطلاعات با مشکل مواجه شد", "error");
+            Swal.fire("خطا", "دریافت اطلاعات با مشکل مواجه شد"+err, "error");
         }
     };
 
@@ -64,7 +64,7 @@ const MobileComponent = () => {
 
             setPayments(response.data['data']);
         } catch (err) {
-            Swal.fire("خطا", "دریافت اطلاعات پرداختی ها با مشکل مواجه شد", "error");
+            Swal.fire("خطا", "دریافت اطلاعات پرداختی ها با مشکل مواجه شد"+err, "error");
         }
     };
 
@@ -75,7 +75,7 @@ const MobileComponent = () => {
             });
             setCountInvoices(response.data["data"][0].countInvoices);
         } catch (err) {
-            Swal.fire("خطا", "دریافت اطلاعات با مشکل مواجه شد", "error");
+            Swal.fire("خطا", "دریافت اطلاعات با مشکل مواجه شد"+err, "error");
         }
     };
 
@@ -88,7 +88,7 @@ const MobileComponent = () => {
 
             setCountCustomer(response.data["data"][0].countCustomers);
         } catch (err) {
-            Swal.fire("خطا", "دریافت اطلاعات با مشکل مواجه شد", "error");
+            Swal.fire("خطا", "دریافت اطلاعات با مشکل مواجه شد"+err, "error");
         }
     };
 
@@ -99,7 +99,7 @@ const MobileComponent = () => {
             });
             setCountPayments(response.data["data"][0].countPayments);
         } catch (err) {
-            Swal.fire("خطا", "دریافت اطلاعات با مشکل مواجه شد", "error");
+            Swal.fire("خطا", "دریافت اطلاعات با مشکل مواجه شد"+err, "error");
         }
     };
 
@@ -156,7 +156,7 @@ const MobileComponent = () => {
                             </div>
                         </div>
 
-                        <PieChart width={220} height={200}>
+                        <PieChart id="myPie" width={220} height={200}>
                             <Pie
                                 data={data}
                                 cx="50%"

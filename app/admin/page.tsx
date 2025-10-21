@@ -1,10 +1,10 @@
 "use client";
-import { PieChart, Pie, Cell, Tooltip } from "recharts";
-import formatNumber from "./functions/formatNumber";
+// import { PieChart, Pie, Cell, Tooltip } from "recharts";
+// import formatNumber from "./functions/formatNumber";
 import React, { useEffect, useState } from "react";
-import { httpService } from "@/app/functions/httpService";
-import Cookies from 'js-cookie';
-import Swal from "sweetalert2";
+// import { httpService } from "@/app/functions/httpService";
+// import Cookies from 'js-cookie';
+// import Swal from "sweetalert2";
 import DesktopComponent from "./mediaQuery/desctopComponent";
 import MobileComponent from "./mediaQuery/mobileComponent";
 

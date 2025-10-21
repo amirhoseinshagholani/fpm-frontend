@@ -14,7 +14,7 @@ interface Props {
 }
 
 interface Payment {
-    tracking_code:string,
+    tracking_code: string,
     consumer_mobile: string;
     consumer_name: string;
     amount: number;
@@ -71,7 +71,7 @@ const DesktopComponent: React.FC<Props> = ({ totalAmountInvoices, totalAmountPay
         <>
             <main className="flex-grow p-10 font-vazir-bold flex justify-center items-center">
                 <div className="p-10 rounded-3xl shadow-2xl bg-white w-full grid grid-cols-12 h-full">
-                    <div className="sm:col-span-12 md:col-span-12 lg:col-span-3 xl:col-span-3 2xl:col-span-3 relative w-[400px] h-[400px] md:mx-auto h-full flex items-center">
+                    <div className={`${payments.length == 0 ? 'hidden' : ''} sm:col-span-12 md:col-span-12 lg:col-span-3 xl:col-span-3 2xl:col-span-3 relative w-[400px] h-[400px] md:mx-auto h-full flex items-center`}>
                         <div className="absolute inset-0 flex flex-col justify-center items-center z-10 text-xs text-gray-800 space-y-3">
                             {/* <div className="text-center leading-tight">
                                 <div className="font-bold">کل سفارشات</div>
@@ -161,7 +161,15 @@ const DesktopComponent: React.FC<Props> = ({ totalAmountInvoices, totalAmountPay
                     </div>
                     <div className="sm:col-span-12 md:col-span-12 lg:col-span-12 xl:col-span-12 2xl:col-span-6 md:mt-5 flex items-center">
                         <div className="w-full">
-                            <div className="text-center">تراکنش های اخیر</div>
+                            <div className="text-center">
+                                {
+                                    payments.length > 0 ? (
+                                        <span>تراکنش های اخیر</span>
+                                    ):(
+                                        <span className="text-red-400">در حال حاضر تراکنشی ثبت نشده است</span>
+                                    )
+                                }
+                            </div>
                             <div className="mt-4">
 
                                 {payments.slice(0, 10).map((payment, index) => (
@@ -184,7 +192,6 @@ const DesktopComponent: React.FC<Props> = ({ totalAmountInvoices, totalAmountPay
                                                 <span className="font-vazir-medium hidden md:block">{payment.tracking_code}</span>
                                             </div>
                                             <div className="w-30 text-nowrap">
-                                                {/* <span>وضعیت: </span> */}
                                                 <span className="font-vazir-medium">
                                                     {
                                                         payment.status === 0 ? "در انتظار پرداخت" :
@@ -202,7 +209,6 @@ const DesktopComponent: React.FC<Props> = ({ totalAmountInvoices, totalAmountPay
                                     <div className="flex justify-between p-3 pt-1 pb-1 rounded-lg text-xs">
                                         <div className="w-30"><span className="font-vazir-bold"></span><span className="font-vazir-medium"></span></div>
                                         <div className="w-30"><span></span><span className="font-vazir-medium"></span></div>
-                                        {/* <div className="w-30"><span>جمع کل: </span><span className="font-vazir-medium">{formatNumber(totalAmountPayments)}</span></div> */}
                                         <div className="w-36"><span></span><span className="font-vazir-medium"></span></div>
                                     </div>
                                 </div>

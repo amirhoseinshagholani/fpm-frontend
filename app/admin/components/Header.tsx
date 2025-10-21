@@ -2,7 +2,7 @@
 
 import MenuSvg from '@/public/svg/menuSvg';
 import styles from '@/styles/Header.module.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 
@@ -16,7 +16,7 @@ const Header = () => {
 
     const logout = () => {
         Cookies.remove('fpmToken');
-        router.push('/auth/login');
+        router.push('/panel/panel/auth/login');
     };
 
     return (
@@ -24,13 +24,13 @@ const Header = () => {
             {/* دسکتاپ */}
             <header className={`font-vazir-bold text-black bg-blue-400 rounded-b-2xl hidden md:block ${styles.header} ${styles.active}`}>
                 <ul className={styles.nav}>
-                    <li className={styles.loud}><a href="/admin">داشبورد</a></li>
-                    <li className={styles.loud}><a href="/admin/pages/roles">نقش ها</a></li>
-                    <li className={styles.loud}><a href="/admin/pages/users">کاربران</a></li>
-                    <li className={styles.loud}><a href="/admin/pages/customers">مشتریان</a></li>
-                    <li className={styles.loud}><a href="/admin/pages/products">محصولات</a></li>
-                    <li className={styles.loud}><a href="/admin/pages/payments">پرداخت ها</a></li>
-                    <li className={styles.loud}><a href="/admin/pages/invoices">سفارشات</a></li>
+                    <li className={styles.loud}><a href="/panel/admin">داشبورد</a></li>
+                    <li className={styles.loud}><a href="/panel/admin/pages/roles">نقش ها</a></li>
+                    <li className={styles.loud}><a href="/panel/admin/pages/users">کاربران</a></li>
+                    <li className={styles.loud}><a href="/panel/admin/pages/customers">مشتریان</a></li>
+                    <li className={styles.loud}><a href="/panel/admin/pages/products">محصولات</a></li>
+                    <li className={styles.loud}><a href="/panel/admin/pages/payments">پرداخت ها</a></li>
+                    <li className={styles.loud}><a href="/panel/admin/pages/invoices">سفارشات</a></li>
                     <li className={styles.loud}><a href="#" onClick={logout}>خروج</a></li>
                 </ul>
             </header>
@@ -38,13 +38,13 @@ const Header = () => {
             {/* موبایل */}
             <header className={`font-vazir-bold text-black bg-blue-400 rounded-b-2xl block md:hidden ${styles.header} ${active ? styles.active : ''}`}>
                 <ul className={`${styles.nav}`}>
-                <li className={styles.loud}><a href="/admin">داشبورد</a></li>
-                    <li className={styles.loud}><a href="/admin/pages/roles">نقش ها</a></li>
-                    <li className={styles.loud}><a href="/admin/pages/users">کاربران</a></li>
-                    <li className={styles.loud}><a href="/admin/pages/customers">مشتریان</a></li>
-                    <li className={styles.loud}><a href="/admin/pages/products">محصولات</a></li>
-                    <li className={styles.loud}><a href="/admin/pages/payments">پرداخت ها</a></li>
-                    <li className={styles.loud}><a href="/admin/pages/invoices">سفارشات</a></li>
+                <li className={styles.loud}><a href="/panel/admin">داشبورد</a></li>
+                    <li className={styles.loud}><a href="/panel/admin/pages/roles">نقش ها</a></li>
+                    <li className={styles.loud}><a href="/panel/admin/pages/users">کاربران</a></li>
+                    <li className={styles.loud}><a href="/panel/admin/pages/customers">مشتریان</a></li>
+                    <li className={styles.loud}><a href="/panel/admin/pages/products">محصولات</a></li>
+                    <li className={styles.loud}><a href="/panel/admin/pages/payments">پرداخت ها</a></li>
+                    <li className={styles.loud}><a href="/panel/admin/pages/invoices">سفارشات</a></li>
                     <li className={styles.loud}><a href="#" onClick={logout}>خروج</a></li>
                 </ul>
                 <div onClick={tooglestatus} className="flex">
